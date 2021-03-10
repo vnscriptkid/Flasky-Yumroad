@@ -5,6 +5,8 @@ class BaseConfig:
 
 class DevConfig(BaseConfig):
     DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///dev.db'
+    SQLALCHEMY_ECHO = True
 
 
 class TestConfig(BaseConfig):
