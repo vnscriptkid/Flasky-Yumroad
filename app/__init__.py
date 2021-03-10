@@ -9,5 +9,5 @@ def create_app(environment_name='dev'):
     db.init_app(app)
     return app
 
-# FLASK_ENV=development FLASK_APP="app:create_app" flask run
+# FLASK_ENV=development FLASK_APP=app:create_app flask run
 
