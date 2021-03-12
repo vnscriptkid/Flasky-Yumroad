@@ -1,0 +1,15 @@
+{% from "_formhelpers.html" import render_field %}
+
+{% extends "base_layout.html" %}
+
+{% block title %} Edit {{ product.name }} {% endblock %}
+
+{% block content %}
+<div class="container">
+    <form method="POST" action="{{ url_for('products.edit', product_id=product.id) }}">
+    {{ render_field(form.name) }}
+    {{ render_field(form.description) }}
+    <button type="submit" class="btn btn-primary">Edit</button>
+    </form>
+</div>
+{% endblock %}

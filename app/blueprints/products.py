@@ -35,6 +35,19 @@ def create():
     return render_template('products/create.html', form=form)
 
 
+@products.route('/<product_id>/edit', methods=['GET', 'POST'])
+def edit(product_id):
+    product = Product.query.get_or_404(product_id)
+    form = ProductForm(obj=product)
+    if form.validate_on_submit():
+        product.name = form.name.data
+        product.description = form.description.data
+        db.session.add(product)
+        db.session.commit()
+        return redirect(url_for('.details', product_id=product.id))
+    return render_template('products/edit.html', form=form, product=product)
+
+
 @products.errorhandler(404)
 def not_found(exception):
     return render_template('products/404.html'), 404
