@@ -6,3 +6,4 @@ pytest-flask
 pytest-cov
 
 flask-sqlalchemy
+Flask-WTF

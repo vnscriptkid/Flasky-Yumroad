@@ -1,6 +1,7 @@
 class BaseConfig:
     TESTING = False
     DEBUG = False
+    WTF_CSRF_ENABLED = False
 
 
 class DevConfig(BaseConfig):
