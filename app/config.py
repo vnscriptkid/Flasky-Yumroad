@@ -1,7 +1,11 @@
+import os
+
+
 class BaseConfig:
     TESTING = False
     DEBUG = False
-    WTF_CSRF_ENABLED = False
+    WTF_CSRF_ENABLED = True
+    SECRET_KEY = os.getenv('SECRET_KEY', '00000abcdef')
 
 
 class DevConfig(BaseConfig):
@@ -12,10 +16,11 @@ class DevConfig(BaseConfig):
 
 class TestConfig(BaseConfig):
     TESTING = True
+    WTF_CSRF_ENABLED = False
 
 
 class ProdConfig(BaseConfig):
-    pass
+    SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 configurations = {

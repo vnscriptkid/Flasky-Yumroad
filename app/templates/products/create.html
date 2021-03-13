@@ -2,12 +2,13 @@
 
 {% extends "base_layout.html" %}
 
+{% block title %} New Product {% endblock %}
+
 {% block content %}
-<form method="POST">
-    {{ form.name.label }}
-    {{ form.name }}
-    {{ form.description.label }}
-    {{ form.description }}
-    {{ form.submit }}
+<form method="POST" action="{{ url_for('products.create') }}">
+    {{ form.csrf_token }}
+    {{ render_field(form.name) }}
+    {{ render_field(form.description) }}
+    <button type="submit" class="btn btn-primary">Create</button>
 </form>
 {% endblock %}

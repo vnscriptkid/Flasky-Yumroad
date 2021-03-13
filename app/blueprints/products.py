@@ -31,7 +31,7 @@ def create():
         product = Product(name=request.form['name'], description=request.form['description'])
         db.session.add(product)
         db.session.commit()
-        return redirect(url_for('product.details', product_id=product.id))
+        return redirect(url_for('products.details', product_id=product.id))
     return render_template('products/create.html', form=form)
 
 
