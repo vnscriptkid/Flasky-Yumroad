@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for
-from flask_login import login_required
+from flask_login import login_required, current_user
 from flask_wtf import form
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
@@ -30,9 +30,13 @@ def details(product_id):
 def create():
     form = ProductForm()
     if form.validate_on_submit():
-        product = Product(name=request.form['name'], description=request.form['description'])
+        product = Product(name=form.name.data,
+                          description=form.description.data,
+                          creator=current_user,
+                          store=current_user.store)
         db.session.add(product)
         db.session.commit()
+
         return redirect(url_for('products.details', product_id=product.id))
     return render_template('products/create.html', form=form)
 
