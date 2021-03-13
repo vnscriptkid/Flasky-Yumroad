@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from werkzeug.security import check_password_hash
 from wtforms import validators
 
-from wtforms.fields import StringField, SubmitField, PasswordField
+from wtforms.fields import StringField, SubmitField, PasswordField, DecimalField
 from wtforms.validators import Length, DataRequired
 
 from app.models import User
@@ -11,6 +11,10 @@ from app.models import User
 class ProductForm(FlaskForm):
     name = StringField('Name', [Length(min=4, max=60)])
     description = StringField('Description')
+
+    picture_url = StringField('Picture URL', description='Optional', validators=[validators.URL()])
+    price = DecimalField('Price', description='in USD, Optional')
+
     submit = SubmitField('Create Product')
 
 

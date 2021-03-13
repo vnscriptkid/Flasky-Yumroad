@@ -26,6 +26,10 @@ class Product(db.Model):
             raise ValueError('needs to have a name')
         return name
 
+    @property
+    def primary_image_url(self):
+        return self.picture_url or "https://placehold.co/600x400?text={}".format(self.name)
+
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)

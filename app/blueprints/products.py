@@ -32,6 +32,8 @@ def create():
     if form.validate_on_submit():
         product = Product(name=form.name.data,
                           description=form.description.data,
+                          price_cents=int(form.price.data*100),
+                          picture_url=form.picture_url.data,
                           creator=current_user,
                           store=current_user.store)
         db.session.add(product)
