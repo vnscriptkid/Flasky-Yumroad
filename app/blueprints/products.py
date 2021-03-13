@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, url_for
 from flask_login import login_required, current_user
-from flask_wtf import form
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
 
@@ -30,9 +29,10 @@ def details(product_id):
 def create():
     form = ProductForm()
     if form.validate_on_submit():
+        price = form.price.data or 0
         product = Product(name=form.name.data,
                           description=form.description.data,
-                          price_cents=int(form.price.data*100),
+                          price_cents=int(price*100),
                           picture_url=form.picture_url.data,
                           creator=current_user,
                           store=current_user.store)
