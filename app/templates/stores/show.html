@@ -10,14 +10,15 @@
         {% for product_row in products | batch(3) %}
             <div class="row mb-3">
                 {% for product in product_row %}
-                    <div class="col-sm-4">
+                    <div class="col-4">
                         <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="{{ product.primary_image_url }}" alt="Product Image">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ product.name }}</h5>
                                     <p class="card-text"> {{ product.description }} </p>
                                 </div>
                                 <div class="card-body">
-                                <a href="{{ url_for('product.details', product_id=product.id) }}" class="card-link btn btn-primary">
+                                <a href="{{ url_for('products.details', product_id=product.id) }}" class="card-link btn btn-primary">
                                     View Details
                                 </a>
                                 </div>
