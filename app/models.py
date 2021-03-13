@@ -16,7 +16,7 @@ class Product(db.Model):
     creator = db.relationship("User", uselist=False, back_populates="products")
 
     store_id = db.Column(db.Integer, db.ForeignKey('store.id'))
-    creator = db.relationship("User", uselist=False, back_populates="products")
+    store = db.relationship("Store", uselist=False, back_populates="products")
 
     db.Index('idx_name_and_desc', 'name', 'description')
 

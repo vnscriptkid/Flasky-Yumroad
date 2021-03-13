@@ -11,3 +11,4 @@ Flask-Login
 wtforms[email]
 
 Flask-Migrate
+flask_mail

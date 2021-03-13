@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, session, request
 from flask_login import login_user, login_required, logout_user, current_user
 
+from app.email import send_pretty_welcome_message
 from app.extensions import login_manager
 from app.models import User, db, Store
 from app.forms import SignupForm, LoginForm
@@ -17,14 +18,14 @@ def register():
     form = SignupForm()
     if form.validate_on_submit():
         user = User.create(form.email.data, form.password.data)
-        db.session.add(user)
         store = Store(name=form.store_name.data, user=user)
         db.session.add(store)
         db.session.commit()
 
         login_user(user)
-        flash("Registered succesfully.", "success")
+        send_pretty_welcome_message(user)
 
+        flash("Registered succesfully.", "success")
         return redirect(session.get('after_login') or url_for("products.index"))
     return render_template("users/register.html", form=form)
 

@@ -2,11 +2,18 @@ import pytest
 from flask import url_for
 
 from app import db
-from app.models import User
+from app.models import User, Store
 
 EXAMPLE_EMAIL = "test@example.com"
 EXAMPLE_PASSWORD = "test"
+STORE_NAME = "Test Store"
 
+SHORT_STORE_NAME = {
+    'store_name': 'abc',
+    'email': EXAMPLE_EMAIL,
+    'password': EXAMPLE_PASSWORD,
+    'confirm': EXAMPLE_PASSWORD,
+}
 
 VALID_LOGIN_PARAMS = {
     'email': EXAMPLE_EMAIL,
@@ -17,6 +24,7 @@ VALID_REGISTER_PARAMS = {
     'email': EXAMPLE_EMAIL,
     'password': EXAMPLE_PASSWORD,
     'confirm': EXAMPLE_PASSWORD,
+    'store_name': STORE_NAME,
 }
 
 
@@ -52,12 +60,32 @@ def test_get_register(client, init_database):
     assert 'Password' in str(response.data)
 
 
-def test_register(client, init_database):
+def test_register(client, init_database, mail_outbox):
     response = client.post('/register', data=VALID_REGISTER_PARAMS, follow_redirects=True)
     assert response.status_code == 200
+
+    assert User.query.count() == 1
+    assert Store.query.count() == 1
+    assert User.query.first().store == Store.query.first()
+
     assert b'Registered succesfully.' in response.data
     assert EXAMPLE_EMAIL in str(response.data)
     assert b'Add Product' in response.data
+
+    assert len(mail_outbox) == 1
+    assert mail_outbox[0].subject == "Welcome to YumYum Test Store"
+
+
+def test_register_with_invalid_store_name(client, init_database, mail_outbox):
+    user = create_user()
+    response = client.post('/register', data=SHORT_STORE_NAME, follow_redirects=True)
+
+    assert response.status_code == 200
+    assert b'must be at least 4 characters long' in response.data
+    assert b'Sign up' in response.data
+    assert len(mail_outbox) == 0
+    assert b'Registered succesfully.' not in response.data
+    assert b'You are already logged in' not in response.data
 
 
 def test_register_invalid(client, init_database):
@@ -72,6 +100,7 @@ def test_register_invalid(client, init_database):
 def test_register_with_existing_user(client, init_database):
     user = create_user()
     response = client.post('/register', data=VALID_REGISTER_PARAMS, follow_redirects=True)
+
     assert response.status_code == 200
     assert b'That email already has an account' in response.data
     assert b'Sign up' in response.data
