@@ -1,8 +1,9 @@
 from flask import Flask
 
 from app.blueprints.products import products
+from app.blueprints.users import user_bp
 from app.config import configurations
-from app.extensions import db, csrf
+from app.extensions import db, csrf, login_manager
 
 
 def create_app(environment_name='dev'):
@@ -11,8 +12,10 @@ def create_app(environment_name='dev'):
 
     db.init_app(app)
     csrf.init_app(app)
+    login_manager.init_app(app)
 
     app.register_blueprint(products, url_prefix="/product")
+    app.register_blueprint(user_bp)
 
     return app
 

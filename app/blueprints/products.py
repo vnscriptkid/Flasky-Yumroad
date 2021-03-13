@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, url_for
+from flask_login import login_required
 from flask_wtf import form
 from werkzeug.exceptions import abort
 from werkzeug.utils import redirect
@@ -25,6 +26,7 @@ def details(product_id):
 
 
 @products.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
     form = ProductForm()
     if form.validate_on_submit():
@@ -36,6 +38,7 @@ def create():
 
 
 @products.route('/<product_id>/edit', methods=['GET', 'POST'])
+@login_required
 def edit(product_id):
     product = Product.query.get_or_404(product_id)
     form = ProductForm(obj=product)

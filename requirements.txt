@@ -7,3 +7,5 @@ pytest-cov
 
 flask-sqlalchemy
 Flask-WTF
+Flask-Login
+wtforms[email]

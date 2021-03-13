@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light justify-content-between">
-    <a class="navbar-brand">Yumroad</a>
-    </nav>
+    {% from '_macros.html' import render_flashes %}
+
+    {% include '_navbar.html' %}
+
+    {{ render_flashes() }}
+
     <div class="container mt-3">
     {% block content %}{% endblock %}
     </div>

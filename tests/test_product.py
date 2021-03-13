@@ -44,19 +44,19 @@ def test_details_page(client, init_database, sample_book):
     assert sample_book.name in str(response.data)
 
 
-def test_non_existent_book(client, init_database, sample_book):
+def test_non_existent_book(client, init_database, sample_book, authenticated_request):
     response = client.get(url_for('products.details', product_id=sample_book.id+1))
     assert response.status_code == 404
 
 
-def test_new_page(client, init_database):
+def test_new_page(client, init_database, authenticated_request):
     response = client.get(url_for('products.create'))
     assert response.status_code == 200
     assert b'Name' in response.data
     assert b'Create' in response.data
 
 
-def test_creation(client, init_database):
+def test_creation(client, init_database, authenticated_request):
     response = client.post(url_for('products.create'),
                            data=dict(name='test product', description='is persisted'),
                            follow_redirects=True)
@@ -65,7 +65,7 @@ def test_creation(client, init_database):
     assert b'Purchase' in response.data
 
 
-def test_invalid_creation(client, init_database):
+def test_invalid_creation(client, init_database, authenticated_request):
     response = client.post(url_for('products.create'),
                            data=dict(name='ab', description='is not valid'),
                            follow_redirects=True)
@@ -75,7 +75,7 @@ def test_invalid_creation(client, init_database):
     assert b'is-invalid' in response.data
 
 
-def test_edit_page(client, init_database, sample_book):
+def test_edit_page(client, init_database, sample_book, authenticated_request):
     response = client.get(url_for('products.edit', product_id=sample_book.id))
     assert response.status_code == 200
     assert sample_book.description in str(response.data)
@@ -83,7 +83,7 @@ def test_edit_page(client, init_database, sample_book):
     assert b'Edit' in response.data
 
 
-def test_edit_submission(client, init_database, sample_book):
+def test_edit_submission(client, init_database, sample_book, authenticated_request):
     old_description = sample_book.description
     old_name = sample_book.name
     response = client.post(url_for('products.edit',
@@ -98,7 +98,7 @@ def test_edit_submission(client, init_database, sample_book):
     assert b'Edit' not in response.data
 
 
-def test_invalid_edit_submission(client, init_database, sample_book):
+def test_invalid_edit_submission(client, init_database, sample_book, authenticated_request):
     old_description = sample_book.description
     old_name = sample_book.name
     response = client.post(url_for('products.edit', product_id=sample_book.id),
