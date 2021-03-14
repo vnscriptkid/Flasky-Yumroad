@@ -5,7 +5,10 @@
     {% block title %}{% endblock %} Yumroad
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+    {% assets "common_css" %}
+        <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
+    {% endassets %}
+    {% block custom_assets %} {% endblock %}
 </head>
 <body>
     {% from '_macros.html' import render_flashes %}

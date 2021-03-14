@@ -18,12 +18,14 @@ class DevConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///dev.db'
     SQLALCHEMY_ECHO = True
+    ASSET_DEBUG = True
 
 
 class TestConfig(BaseConfig):
     TESTING = True
     WTF_CSRF_ENABLED = False
     STRIPE_WEBHOOK_KEY = 'whsec_test_secret'
+    ASSET_DEBUG = True
 
 
 class ProdConfig(BaseConfig):

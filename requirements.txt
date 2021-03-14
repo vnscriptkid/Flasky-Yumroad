@@ -16,3 +16,7 @@ flask_mail
 stripe
 
 vcrpy
+
+flask-assets
+cssmin
+jsmin

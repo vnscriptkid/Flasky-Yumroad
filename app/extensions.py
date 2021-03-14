@@ -1,3 +1,4 @@
+from flask_assets import Environment
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
@@ -18,6 +19,7 @@ naming_convention = {
 db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 migrate = Migrate()
 
+assets_env = Environment()
 csrf = CSRFProtect()
 login_manager = LoginManager()
 mail = Mail()
