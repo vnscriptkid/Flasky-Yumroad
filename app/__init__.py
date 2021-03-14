@@ -1,4 +1,7 @@
+import sentry_sdk
 from flask import Flask, render_template
+from sentry_sdk.integrations.flask import FlaskIntegration
+from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 from webassets.loaders import PythonLoader as PythonAssetsLoader
 
 from app import assets
@@ -35,6 +38,13 @@ def create_app(environment_name='dev'):
     app.register_blueprint(store_bp)
     app.register_blueprint(checkout_bp)
     app.register_blueprint(landing_bp)
+
+    # errors monitoring
+    if app.config.get("SENTRY_DSN"):
+        sentry_sdk.init(
+            dsn=app.config["SENTRY_DSN"],
+            integrations=[FlaskIntegration(), SqlalchemyIntegration()]
+        )
 
     # errors handling
     @app.errorhandler(401)

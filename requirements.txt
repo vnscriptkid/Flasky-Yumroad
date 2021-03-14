@@ -20,3 +20,7 @@ vcrpy
 flask-assets
 cssmin
 jsmin
+
+sentry-sdk[flask]
+
+python-dotenv
