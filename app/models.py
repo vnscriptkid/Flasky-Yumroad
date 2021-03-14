@@ -18,6 +18,8 @@ class Product(db.Model):
     store_id = db.Column(db.Integer, db.ForeignKey('store.id'))
     store = db.relationship("Store", uselist=False, back_populates="products")
 
+    orders = db.relationship("Order", back_populates='product')
+
     db.Index('idx_name_and_desc', 'name', 'description')
 
     @validates('name')
@@ -63,4 +65,12 @@ class Store(db.Model):
         return name
 
 
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    purchaser_email = db.Column(db.String(255), nullable=False)
+    purchased_at = db.Column(db.DateTime, nullable=False)
+    payment_reference_id = db.Column(db.String(255))
+
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
+    product = db.relationship("Product", back_populates="orders")
 
