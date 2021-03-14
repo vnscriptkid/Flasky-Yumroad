@@ -1,5 +1,6 @@
 from flask import Flask
 
+from app.blueprints.checkout import checkout_bp
 from app.blueprints.products import products
 from app.blueprints.stores import store_bp
 from app.blueprints.users import user_bp
@@ -21,6 +22,7 @@ def create_app(environment_name='dev'):
     app.register_blueprint(products, url_prefix="/product")
     app.register_blueprint(user_bp)
     app.register_blueprint(store_bp)
+    app.register_blueprint(checkout_bp)
 
     return app
 

@@ -12,6 +12,7 @@ class Checkout:
     def init_app(self, app):
         stripe.api_key = app.config.get('STRIPE_SECRET_KEY')
         self.publishable_key = app.config.get('STRIPE_PUBLISHABLE_KEY')
+        self.webhook_key = app.config.get('STRIPE_WEBHOOK_KEY')
 
     def create_session(self, product):
         if not product.price_cents:
@@ -41,5 +42,13 @@ class Checkout:
         )
         return session
 
+    def parse_webhook(self, payload, headers):
+        received_sig = headers.get("Stripe-Signature", None)
 
+        return stripe.Webhook.construct_event(
+            payload, received_sig, self.webhook_key
+        )
+
+    def get_customer(self, customer_id):
+        return stripe.Customer.retrieve(customer_id)
 
