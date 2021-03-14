@@ -14,3 +14,5 @@ Flask-Migrate
 flask_mail
 
 stripe
+
+vcrpy

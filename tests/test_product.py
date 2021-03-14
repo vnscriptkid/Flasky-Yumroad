@@ -1,4 +1,5 @@
 import pytest
+import vcr
 from flask import url_for
 
 from app import db
@@ -34,6 +35,7 @@ def test_index_page(client, init_database):
     assert expected_link in str(response.data)
 
 
+@vcr.use_cassette('tests/cassettes/new_stripe_session.yaml', filter_headers=['authorization'], record_mode='once')
 def test_details_page(client, init_database):
     book = create_book()
     response = client.get(url_for('products.details', product_id=book.id))
@@ -61,6 +63,7 @@ def test_new_page(client, init_database, authenticated_request):
     assert b'Create' in response.data
 
 
+@vcr.use_cassette('tests/cassettes/new_stripe_session.yaml', filter_headers=['authorization'], record_mode='once')
 def test_creation(client, init_database, authenticated_request):
     response = client.post(url_for('products.create'),
                            data=dict(name='test product', description='is persisted', price=5),
@@ -129,4 +132,22 @@ def test_invalid_edit_submission(client, init_database, authenticated_request):
     assert old_description not in str(response.data)
     assert old_name in str(response.data)  # It's still in the page title
     assert b'Edit' in response.data
+
+
+@vcr.use_cassette('tests/cassettes/new_stripe_session.yaml', filter_headers=['authorization'], record_mode='once')
+def test_post_checkout_success_page(client, init_database, user_with_product):
+    product = Product.query.first()
+    response = client.get(url_for('products.post_checkout', product_id=product.id,
+                                  status='success', session_id='test_1'), follow_redirects=True)
+    assert response.status_code == 200
+    assert b'You will receive an email shortly' in response.data
+
+
+@vcr.use_cassette('tests/cassettes/new_stripe_session.yaml', filter_headers=['authorization'], record_mode='once')
+def test_post_checkout_fail_page(client, init_database, user_with_product):
+    product = Product.query.first()
+    response = client.get(url_for('products.post_checkout', product_id=product.id,
+                                  status='cancel', session_id='test_1'), follow_redirects=True)
+    assert response.status_code == 200
+    assert b'There was an error while attempting' in response.data
 

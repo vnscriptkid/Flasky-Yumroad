@@ -1,6 +1,5 @@
-from os import abort
-
 from flask import Blueprint, request
+from werkzeug.exceptions import abort
 
 from app.email import send_purchase_email
 from app.extensions import csrf, checkout

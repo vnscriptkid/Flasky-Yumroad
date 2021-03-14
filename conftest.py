@@ -2,7 +2,7 @@ import pytest
 from flask import url_for
 
 from app import create_app, mail
-from app.models import db, User, Store
+from app.models import db, User, Store, Product
 
 
 @pytest.fixture
@@ -36,6 +36,16 @@ def authenticated_request(client):
 def mail_outbox():
     with mail.record_messages() as outbox:
         yield outbox
+
+
+@pytest.fixture
+def user_with_product():
+    new_user = User.create("test@example.com", "pass")
+    store = Store(name="Test Store", user=new_user)
+    product = Product(name='Test Product', description='a product', store=store)
+    db.session.add(product)
+    db.session.commit()
+    yield new_user
 
 # pytest --cov-report term-missing --cov=app
 

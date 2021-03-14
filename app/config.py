@@ -23,6 +23,7 @@ class DevConfig(BaseConfig):
 class TestConfig(BaseConfig):
     TESTING = True
     WTF_CSRF_ENABLED = False
+    STRIPE_WEBHOOK_KEY = 'whsec_test_secret'
 
 
 class ProdConfig(BaseConfig):

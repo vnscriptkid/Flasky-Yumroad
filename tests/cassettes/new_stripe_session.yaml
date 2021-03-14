@@ -1,0 +1,81 @@
+interactions:
+- request:
+    body: payment_method_types[0]=card&client_reference_id=1&line_items[0][name]=Sherlock+Homes&line_items[0][description]=a+house+hunting+detective&line_items[0][amount]=500&line_items[0][currency]=usd&line_items[0][images][0]=https%3A%2F%2Fplacehold.co%2F600x400%3Ftext%3DSherlock+Homes&line_items[0][quantity]=1&mode=payment&success_url=http%3A%2F%2Flocalhost%2Fproduct%2F1%2Fpost-checkout%3Fsession_id%3D%7BCHECKOUT_SESSION_ID%7D%26status%3Dsuccess&cancel_url=http%3A%2F%2Flocalhost%2Fproduct%2F1%2Fpost-checkout%3Fsession_id%3D%7BCHECKOUT_SESSION_ID%7D%26status%3Dcancel
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '565'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Idempotency-Key:
+      - 398102a4-5356-44d4-9669-bfe4aeae4945
+      User-Agent:
+      - Stripe/v1 PythonBindings/2.56.0
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version": "2.56.0", "lang": "python", "publisher": "stripe", "httplib":
+        "requests", "lang_version": "3.7.9", "platform": "Windows-10-10.0.19041-SP0",
+        "uname": "Windows DESKTOP-30MOINT 10 10.0.19041 AMD64 Intel64 Family 6 Model
+        158 Stepping 10, GenuineIntel"}'
+    method: POST
+    uri: https://api.stripe.com/v1/checkout/sessions
+  response:
+    body:
+      string: "{\n  \"id\": \"cs_test_a1bCqcYifWEacSRAMyGvcLj122SfHarosIoD2yOTbfQLcugOzMS3BdWGCX\",\n
+        \ \"object\": \"checkout.session\",\n  \"allow_promotion_codes\": null,\n
+        \ \"amount_subtotal\": 500,\n  \"amount_total\": 500,\n  \"billing_address_collection\":
+        null,\n  \"cancel_url\": \"http://localhost/product/1/post-checkout?session_id={CHECKOUT_SESSION_ID}\\u0026status=cancel\",\n
+        \ \"client_reference_id\": \"1\",\n  \"currency\": \"usd\",\n  \"customer\":
+        null,\n  \"customer_details\": null,\n  \"customer_email\": null,\n  \"livemode\":
+        false,\n  \"locale\": null,\n  \"metadata\": {\n  },\n  \"mode\": \"payment\",\n
+        \ \"payment_intent\": \"pi_1IUqy7FXo0FEMCl5Hwem9nmy\",\n  \"payment_method_types\":
+        [\n    \"card\"\n  ],\n  \"payment_status\": \"unpaid\",\n  \"setup_intent\":
+        null,\n  \"shipping\": null,\n  \"shipping_address_collection\": null,\n  \"submit_type\":
+        null,\n  \"subscription\": null,\n  \"success_url\": \"http://localhost/product/1/post-checkout?session_id={CHECKOUT_SESSION_ID}\\u0026status=success\",\n
+        \ \"total_details\": {\n    \"amount_discount\": 0,\n    \"amount_tax\": 0\n
+        \ }\n}\n"
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '992'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 14 Mar 2021 10:14:43 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains; preload
+      access-control-allow-credentials:
+      - 'true'
+      access-control-allow-methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      access-control-allow-origin:
+      - '*'
+      access-control-expose-headers:
+      - Request-Id, Stripe-Manage-Version, X-Stripe-External-Auth-Required, X-Stripe-Privileged-Session-Required
+      access-control-max-age:
+      - '300'
+      cache-control:
+      - no-cache, no-store
+      idempotency-key:
+      - 398102a4-5356-44d4-9669-bfe4aeae4945
+      original-request:
+      - req_myd9UPqAwNwIOZ
+      request-id:
+      - req_myd9UPqAwNwIOZ
+      stripe-should-retry:
+      - 'false'
+      stripe-version:
+      - '2020-08-27'
+      x-stripe-c-cost:
+      - '1'
+    status:
+      code: 200
+      message: OK
+version: 1
