@@ -76,8 +76,3 @@ def edit(product_id):
         return redirect(url_for('.details', product_id=product.id))
     return render_template('products/edit.html', form=form, product=product)
 
-
-@products.errorhandler(404)
-def not_found(exception):
-    return render_template('products/404.html'), 404
-

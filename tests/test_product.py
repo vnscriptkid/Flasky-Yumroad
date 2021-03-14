@@ -49,6 +49,7 @@ def test_non_existent_book(client, init_database, authenticated_request):
     book = create_book()
     response = client.get(url_for('products.details', product_id=book.id+1))
     assert response.status_code == 404
+    assert b'We couldn\'t find that page' in response.data
 
 
 def test_new_page_unauthorized(client, init_database):

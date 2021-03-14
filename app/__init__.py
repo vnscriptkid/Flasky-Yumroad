@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from webassets.loaders import PythonLoader as PythonAssetsLoader
 
 from app import assets
@@ -35,6 +35,19 @@ def create_app(environment_name='dev'):
     app.register_blueprint(store_bp)
     app.register_blueprint(checkout_bp)
     app.register_blueprint(landing_bp)
+
+    # errors handling
+    @app.errorhandler(401)
+    def unauthorized_error(error):
+        return render_template('errors/401.html'), 401
+
+    @app.errorhandler(404)
+    def not_found_error(error):
+        return render_template('errors/404.html'), 404
+
+    @app.errorhandler(500)
+    def internal_error(error):
+        return render_template('errors/500.html'), 500
 
     return app
 
