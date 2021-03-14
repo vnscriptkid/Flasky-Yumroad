@@ -4,7 +4,7 @@ from app.blueprints.products import products
 from app.blueprints.stores import store_bp
 from app.blueprints.users import user_bp
 from app.config import configurations
-from app.extensions import db, csrf, login_manager, migrate, mail
+from app.extensions import db, csrf, login_manager, migrate, mail, checkout
 
 
 def create_app(environment_name='dev'):
@@ -16,6 +16,7 @@ def create_app(environment_name='dev'):
     login_manager.init_app(app)
     migrate.init_app(app, db, render_as_batch=True)
     mail.init_app(app)
+    checkout.init_app(app)
 
     app.register_blueprint(products, url_prefix="/product")
     app.register_blueprint(user_bp)

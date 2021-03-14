@@ -1,6 +1,23 @@
 {% extends "base_layout.html" %}
 
 {% block content %}
+
+{% if checkout_session_id %}
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+  var stripe = Stripe('{{ stripe_publishable_key }}');
+
+  function purchase() {
+    stripe.redirectToCheckout({
+      sessionId: '{{checkout_session_id}}'
+    })
+    .then(function (result) {
+      alert(result.error.message)
+    });
+  }
+  </script>
+{% endif %}
+
 <div class="container">
     <div class="row mb-2">
       <div class="col col-12 col-sm-6">

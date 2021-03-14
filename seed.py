@@ -19,7 +19,7 @@ def setup():
         for i in range(2):
             prod = Product(name='Test Book v{}'.format((1 + i) * 2),
                            description='Book #{} in the series'.format(i + 1),
-                           price_cents=100 * i + 1,
+                           price_cents=10000 * (i + 1),
                            store=store)
             db.session.add(prod)
         db.session.commit()

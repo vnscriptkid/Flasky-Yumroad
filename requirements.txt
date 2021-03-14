@@ -12,3 +12,5 @@ wtforms[email]
 
 Flask-Migrate
 flask_mail
+
+stripe
