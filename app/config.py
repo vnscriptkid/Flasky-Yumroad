@@ -34,6 +34,8 @@ class DevConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///dev.db'
     SQLALCHEMY_ECHO = True
     ASSET_DEBUG = True
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
+    DEBUG_TB_PROFILER_ENABLED=True
 
 
 class TestConfig(BaseConfig):
@@ -44,6 +46,7 @@ class TestConfig(BaseConfig):
     # disable redis in test env
     RQ_ASYNC = False
     RQ_CONNECTION_CLASS = 'fakeredis.FakeStrictRedis'
+    DEBUG_TB_ENABLED = False
 
 
 class ProdConfig(BaseConfig):

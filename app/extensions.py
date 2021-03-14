@@ -1,4 +1,5 @@
 from flask_assets import Environment
+from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
@@ -26,4 +27,5 @@ login_manager = LoginManager()
 mail = Mail()
 checkout = Checkout()
 rq2 = RQ()
+debug_toolbar = DebugToolbarExtension()
 

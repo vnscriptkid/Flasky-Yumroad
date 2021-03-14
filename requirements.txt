@@ -29,3 +29,5 @@ Flask-RQ2
 rq==1.4.3
 rq-dashboard
 fakeredis
+
+flask-debugtoolbar
