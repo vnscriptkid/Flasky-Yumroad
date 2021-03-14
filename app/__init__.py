@@ -3,6 +3,7 @@ from webassets.loaders import PythonLoader as PythonAssetsLoader
 
 from app import assets
 from app.blueprints.checkout import checkout_bp
+from app.blueprints.landing import landing_bp
 from app.blueprints.products import products
 from app.blueprints.stores import store_bp
 from app.blueprints.users import user_bp
@@ -21,6 +22,7 @@ def create_app(environment_name='dev'):
     migrate.init_app(app, db, render_as_batch=True)
     mail.init_app(app)
     checkout.init_app(app)
+
     # assets bundling
     assets_env.init_app(app)
     assets_loader = PythonAssetsLoader(assets)
@@ -32,6 +34,7 @@ def create_app(environment_name='dev'):
     app.register_blueprint(user_bp)
     app.register_blueprint(store_bp)
     app.register_blueprint(checkout_bp)
+    app.register_blueprint(landing_bp)
 
     return app
 

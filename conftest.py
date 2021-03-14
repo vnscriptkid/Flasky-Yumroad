@@ -29,7 +29,7 @@ def authenticated_request(client):
         'password': "examplepass"
     }, follow_redirects=True)
 
-    yield client
+    yield new_user
 
 
 @pytest.fixture
