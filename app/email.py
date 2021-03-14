@@ -1,42 +1,39 @@
 from flask import render_template
 from flask_mail import Message
 from app.extensions import mail
+from app.jobs import mailer
 
 DEFAULT_FROM = ('Yumroad', 'yumroad@example.com')
 
 
 def send_basic_welcome_message(recipient_email):
-    message = Message('Welcome to YumYum',
-                      sender=DEFAULT_FROM,
-                      recipients=[recipient_email],
-                      body="Thanks for joining. Let us know if you have any questions!")
-    mail.send(message)
+    subject = 'Welcome to YumYum'
+    body = "Thanks for joining. Let us know if you have any questions!"
+    recipients = [recipient_email]
+    mailer.send_email.queue(subject, DEFAULT_FROM, recipients, body, text_body=body)
 
 
 def send_welcome_message(user):
-    message = Message('Welcome to YumYum {}'.format(user.store.name),
-                      sender=DEFAULT_FROM,
-                      recipients=[user.email])
-
-    message.html = render_template('emails/welcome_basic.html', store=user.store)
-    mail.send(message)
+    store = user.store
+    subject = 'Welcome to YumYum {}'.format(store.name)
+    body = render_template('emails/welcome_basic.html', store=store)
+    recipients = [user.email]
+    mailer.send_email.queue(subject, DEFAULT_FROM, recipients, body)
 
 
 def send_pretty_welcome_message(user):
-    message = Message('Welcome to YumYum {}'.format(user.store.name),
-                      sender=DEFAULT_FROM,
-                      recipients=[user.email])
-
-    message.html = render_template('emails/welcome_pretty.html', store=user.store)
-    mail.send(message)
+    store = user.store
+    subject = 'Welcome to YumYum {}'.format(store.name)
+    body = render_template('emails/welcome_pretty.html', store=store)
+    recipients = [user.email]
+    mailer.send_email.queue(subject, DEFAULT_FROM, recipients, body)
 
 
 def send_purchase_email(email, product):
     store = product.store
-    message = Message('Your purchase of {} from {}'.format(product.name, store.name),
-                      sender=DEFAULT_FROM,
-                      cc=[store.user.email],
-                      recipients=[email])
-    message.html = render_template('emails/purchase.html', product=product)
-    mail.send(message)
+    subject = 'Your purchase of {} from {}'.format(product.name, store.name)
+    recipients = [email]
+    cc_recipients = [store.user.email]
+    body = render_template('emails/welcome_pretty.html', store=store)
+    mailer.send_email.queue(subject, DEFAULT_FROM, recipients, body, cc=cc_recipients)
 

@@ -8,10 +8,11 @@ from app import assets
 from app.blueprints.checkout import checkout_bp
 from app.blueprints.landing import landing_bp
 from app.blueprints.products import products
+from app.blueprints.rq_dashboard import rq_blueprint
 from app.blueprints.stores import store_bp
 from app.blueprints.users import user_bp
 from app.config import configurations
-from app.extensions import db, csrf, login_manager, migrate, mail, checkout, assets_env
+from app.extensions import db, csrf, login_manager, migrate, mail, checkout, assets_env, rq2
 
 
 def create_app(environment_name='dev'):
@@ -25,6 +26,7 @@ def create_app(environment_name='dev'):
     migrate.init_app(app, db, render_as_batch=True)
     mail.init_app(app)
     checkout.init_app(app)
+    rq2.init_app(app)
 
     # assets bundling
     assets_env.init_app(app)
@@ -38,6 +40,7 @@ def create_app(environment_name='dev'):
     app.register_blueprint(store_bp)
     app.register_blueprint(checkout_bp)
     app.register_blueprint(landing_bp)
+    app.register_blueprint(rq_blueprint, url_prefix="/rq")
 
     # errors monitoring
     if app.config.get("SENTRY_DSN"):
@@ -61,5 +64,5 @@ def create_app(environment_name='dev'):
 
     return app
 
-# FLASK_ENV=development FLASK_APP=app:create_app('dev') flask run
+# FLASK_APP=app:create_app('dev') flask run
 

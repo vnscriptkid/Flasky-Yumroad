@@ -24,3 +24,8 @@ jsmin
 sentry-sdk[flask]
 
 python-dotenv
+
+Flask-RQ2
+rq==1.4.3
+rq-dashboard
+fakeredis

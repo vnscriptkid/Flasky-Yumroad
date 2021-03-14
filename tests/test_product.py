@@ -103,6 +103,7 @@ def test_edit_page(client, init_database, authenticated_request):
     assert b'Edit' in response.data
 
 
+@vcr.use_cassette('tests/cassettes/new_stripe_session.yaml', filter_headers=['authorization'], record_mode='once')
 def test_edit_submission(client, init_database, authenticated_request):
     book = create_book()
     old_description = book.description

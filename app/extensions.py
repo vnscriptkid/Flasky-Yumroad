@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 from sqlalchemy import MetaData
+from flask_rq2 import RQ
 
 from app.payments import Checkout
 
@@ -24,4 +25,5 @@ csrf = CSRFProtect()
 login_manager = LoginManager()
 mail = Mail()
 checkout = Checkout()
+rq2 = RQ()
 
