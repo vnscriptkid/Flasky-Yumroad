@@ -1,4 +1,5 @@
 from flask_assets import Environment
+from flask_caching import Cache
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_login import LoginManager
 from flask_mail import Mail
@@ -28,4 +29,5 @@ mail = Mail()
 checkout = Checkout()
 rq2 = RQ()
 debug_toolbar = DebugToolbarExtension()
+cache = Cache()
 

@@ -36,6 +36,7 @@ class DevConfig(BaseConfig):
     ASSET_DEBUG = True
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     DEBUG_TB_PROFILER_ENABLED=True
+    CACHE_TYPE = 'simple'
 
 
 class TestConfig(BaseConfig):
@@ -47,10 +48,15 @@ class TestConfig(BaseConfig):
     RQ_ASYNC = False
     RQ_CONNECTION_CLASS = 'fakeredis.FakeStrictRedis'
     DEBUG_TB_ENABLED = False
+    # no caching in test env
+    CACHE_TYPE = 'null'
+    CACHE_NO_NULL_WARNING = True
 
 
 class ProdConfig(BaseConfig):
     SECRET_KEY = os.getenv('SECRET_KEY')
+    CACHE_TYPE = 'redis'
+    CACHE_KEY_PREFIX = 'yumyum-'
 
 
 configurations = {

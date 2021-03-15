@@ -12,7 +12,7 @@ from app.blueprints.rq_dashboard import rq_blueprint
 from app.blueprints.stores import store_bp
 from app.blueprints.users import user_bp
 from app.config import configurations
-from app.extensions import db, csrf, login_manager, migrate, mail, checkout, assets_env, rq2, debug_toolbar
+from app.extensions import db, csrf, login_manager, migrate, mail, checkout, assets_env, rq2, debug_toolbar, cache
 
 
 def create_app(environment_name='dev'):
@@ -28,6 +28,7 @@ def create_app(environment_name='dev'):
     checkout.init_app(app)
     rq2.init_app(app)
     debug_toolbar.init_app(app)
+    cache.init_app(app)
 
     # assets bundling
     assets_env.init_app(app)

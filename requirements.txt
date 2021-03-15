@@ -31,3 +31,5 @@ rq-dashboard
 fakeredis
 
 flask-debugtoolbar
+
+flask-caching
